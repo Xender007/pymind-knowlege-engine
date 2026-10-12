@@ -19,6 +19,8 @@ This project is a learning project. Claude acts as a strict Python mentor and se
 - Show only the current task in detail. No implementation code or pseudocode in plans.
 - Never change the roadmap silently; explain and ask before significant scope changes.
 
+- The full dependency-ordered roadmap lives in ROADMAP.md. LEDGER.md tracks status per task ID from it.
+
 ## Hints (start at Level 1, escalate only when asked or still stuck)
 1. Conceptual nudge (a question)
 2. Directional hint (relevant concept or code area)

@@ -10,6 +10,12 @@ Tooling: Python 3.14.7, uv. No implementation code or pseudocode appears in this
 - A task is complete only with evidence against its acceptance criteria. Status lives in LEDGER.md.
 - Educational core is implemented by you. Pretrained models/services only for embeddings and generation.
 
+## Storage architecture (decided 2026-10-13)
+- **PostgreSQL is the main database and source of truth** for documents, chunks, metadata, and eval data.
+- **No external vector DB, and no pgvector for retrieval.** The inverted index, BM25, and vector index are built by you; they are derived artifacts, rebuildable from Postgres.
+- Whether raw embeddings are stored in Postgres or on disk is decided in M3-T6.
+- Driver, migrations tool, and Docker-vs-native install are decided in M0-T5, not now.
+
 ## Phases and milestones
 
 ### M0: Foundations
@@ -19,6 +25,7 @@ Tooling: Python 3.14.7, uv. No implementation code or pseudocode appears in this
 | M0-T2 | Config and logging | Typed settings from env/file; structured logging |
 | M0-T3 | Core data models | Document, Chunk, SearchResult types with validation |
 | M0-T4 | Test corpus and fixtures | Small deterministic corpus plus shared test fixtures |
+| M0-T5 | Postgres setup | Local PostgreSQL, connection config, migrations tool decision, isolated test database |
 
 ### M1: Ingestion and chunking
 | ID | Task | Objective |
@@ -28,6 +35,7 @@ Tooling: Python 3.14.7, uv. No implementation code or pseudocode appears in this
 | M1-T3 | Fixed-size chunker | Size and overlap chunking with boundary edge cases |
 | M1-T4 | Structure-aware chunker | Sentence/paragraph/recursive splitting |
 | M1-T5 | Chunk metadata and IDs | Stable chunk IDs, source offsets, provenance |
+| M1-T6 | Postgres persistence | Schema and repository layer for documents and chunks; transactions, idempotent re-ingest |
 
 ### M2: Lexical retrieval
 | ID | Task | Objective |
@@ -36,7 +44,7 @@ Tooling: Python 3.14.7, uv. No implementation code or pseudocode appears in this
 | M2-T2 | Inverted index | Term → postings, doc lengths, build and update |
 | M2-T3 | TF-IDF scoring | Baseline ranking |
 | M2-T4 | BM25 | Parametrized scoring; compare with TF-IDF |
-| M2-T5 | Index persistence | Save/load index; versioning |
+| M2-T5 | Index persistence | Save/load index; versioning; rebuildable from Postgres chunks |
 | M2-T6 | Lexical search API | Top-k query interface |
 
 ### M3: Dense retrieval
@@ -47,7 +55,7 @@ Tooling: Python 3.14.7, uv. No implementation code or pseudocode appears in this
 | M3-T3 | Brute-force vector index | Exact top-k search |
 | M3-T4 | Top-k selection | Heap vs full sort; complexity trade-offs |
 | M3-T5 | Approximate index | Implement one ANN idea (e.g. IVF or HNSW-lite); measure recall vs speed |
-| M3-T6 | Vector persistence | Save/load vectors and index |
+| M3-T6 | Vector persistence | Save/load vectors and index; decide where raw embeddings live (Postgres vs files) |
 
 ### M4: Hybrid retrieval and fusion
 | ID | Task | Objective |
@@ -77,7 +85,7 @@ Tooling: Python 3.14.7, uv. No implementation code or pseudocode appears in this
 ### M7: Evaluation
 | ID | Task | Objective |
 |---|---|---|
-| M7-T1 | Eval dataset | Questions with labelled relevant chunks |
+| M7-T1 | Eval dataset | Questions with labelled relevant chunks (stored in Postgres) |
 | M7-T2 | Retrieval metrics | Recall@k, MRR, nDCG |
 | M7-T3 | Generation checks | Faithfulness and answer-quality heuristics |
 | M7-T4 | Ablation harness | Compare chunking/BM25/dense/hybrid/rerank configs |

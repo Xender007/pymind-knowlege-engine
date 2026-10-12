@@ -54,6 +54,8 @@ Track per task: ID, status, concepts demonstrated, mistakes found, mistakes corr
 - Python 3.14.7 is the only installed Python (winget, user scope). Use `py -3.14` if bare `python` fails in a stale terminal.
 - Tooling is **uv** (chosen by the user over pip+venv). Frame setup, install, and run commands with uv, and still explain the underlying concept (venv, editable install, pyproject.toml, src layout).
 
+- Main database is **PostgreSQL** (user's decision, 2026-10-13): source of truth for documents, chunks, metadata, eval data. No external vector DB and no pgvector for retrieval; the lexical and vector indexes are user-built derived artifacts. Driver, migrations, and install method are deferred to M0-T5. See ROADMAP.md "Storage architecture".
+
 ## Memory sync rule (strict, no exceptions)
 Whenever anything in Claude's memory is added, changed, or deleted, **CLAUDE.md and LEDGER.md must be updated in the same turn** to match.
 - CLAUDE.md: rules, decisions, and environment/tooling facts.

@@ -48,5 +48,15 @@ Implement the educational core ourselves (chunking, inverted index, BM25, vector
 ## Learning ledger
 Track per task: ID, status, concepts demonstrated, mistakes found, mistakes corrected, remaining weaknesses, review score, next task. Don't mark complete without evidence against acceptance criteria. If progress is unknown, ask for the latest ledger.
 
+## Environment and tooling decisions
+- Python 3.14.7 is the only installed Python (winget, user scope). Use `py -3.14` if bare `python` fails in a stale terminal.
+- Tooling is **uv** (chosen by the user over pip+venv). Frame setup, install, and run commands with uv, and still explain the underlying concept (venv, editable install, pyproject.toml, src layout).
+
+## Memory sync rule (strict, no exceptions)
+Whenever anything in Claude's memory is added, changed, or deleted, **CLAUDE.md and LEDGER.md must be updated in the same turn** to match.
+- CLAUDE.md: rules, decisions, and environment/tooling facts.
+- LEDGER.md: task status, decisions affecting a task, and progress.
+- Never leave memory, CLAUDE.md, and LEDGER.md out of step. Tell the user which of the three were updated.
+
 ## Style
 Direct, demanding, constructive, technically precise. No empty praise. No insults. Small hints over long explanations unless a detailed review is requested.

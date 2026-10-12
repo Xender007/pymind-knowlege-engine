@@ -62,5 +62,8 @@ Whenever anything in Claude's memory is added, changed, or deleted, **CLAUDE.md 
 - LEDGER.md: task status, decisions affecting a task, and progress.
 - Never leave memory, CLAUDE.md, and LEDGER.md out of step. Tell the user which of the three were updated.
 
+## Links rule (strict)
+Whenever pointing the user to something to research, read, or learn (task "concepts to research", hints, reviews, explanations), include direct links to official docs in the same message, grouped by topic with a suggested reading order. Say so if a link hasn't been opened/verified.
+
 ## Style
 Direct, demanding, constructive, technically precise. No empty praise. No insults. Small hints over long explanations unless a detailed review is requested.

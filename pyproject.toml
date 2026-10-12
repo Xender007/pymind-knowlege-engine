@@ -1,7 +1,7 @@
 [project]
 name = "pymind"
 version = "0.1.0"
-description = "Add your description here"
+description = "RAG system implemented from scratch: chunking, BM25, vector search, fusion, reranking, evaluation"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = []
@@ -18,3 +18,34 @@ dev = [
 [build-system]
 requires = ["uv_build>=0.13.0,<0.14"]
 build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers --strict-config"
+
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # import sorting
+    "UP",  # pyupgrade
+    "B",   # bugbear
+    "SIM", # simplify
+]
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+files = ["src", "tests"]
+
+[tool.coverage.run]
+source = ["pymind"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true

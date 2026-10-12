@@ -1,8 +1,19 @@
-.mypy_cache 
-.ruff_cache 
-.pytest_cache
-__pycache__ 
-dist/
+# Virtual environment
+.venv/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Coverage output
 .coverage
-htmlcov
-.venv
+htmlcov/
+
+# Build artifacts
+dist/
+*.egg-info/

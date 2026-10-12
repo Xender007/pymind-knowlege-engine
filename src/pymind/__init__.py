@@ -1,3 +1,3 @@
 from importlib.metadata import version
 
-version('wheel')
+__version__ = version("pymind")
